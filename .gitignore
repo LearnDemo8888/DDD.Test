@@ -2,3 +2,13 @@
 /Src/EFCore领域事件发布的时机/obj
 /.idea
 /.vs
+/Src/DDD.Test.EventBus/bin
+/Src/DDD.Test.EventBus/obj
+/Src/RabbitMQ客户端/bin
+/Src/RabbitMQ客户端/obj
+/Src/RabbitMQ消费者/bin
+/Src/RabbitMQ消费者/obj
+/Src/Test1/bin
+/Src/Test1/obj
+/Src/Test2/bin
+/Src/Test2/obj
