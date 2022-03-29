@@ -129,8 +129,21 @@ namespace DDD.Test.EventBus
          
             lock (sync_root)
             {
-                _connection = _connectionFactory
-                              .CreateConnection();
+
+                var policy = RetryPolicy.Handle<SocketException>()
+                  .Or<BrokerUnreachableException>()
+                  .WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                  {
+                      _logger.LogWarning(ex, "RabbitMQ客户端连接失败 {TimeOut}s ({ExceptionMessage})", $"{time.TotalSeconds:n1}", ex.Message);
+                  }
+              );
+
+                policy.Execute(() =>
+                {
+                    _connection = _connectionFactory
+                            .CreateConnection();
+                });
+          
 
                 if (IsConnected)
                 {
